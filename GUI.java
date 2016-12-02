@@ -25,6 +25,7 @@ public class GUI extends Format implements ActionListener {
 		frame.setVisible(true);
 	}
 	
+	//When search button is pressed, console prints the user-inputted word to be searched
 	public void actionPerformed(ActionEvent evt){
 		String word = text.getText();
 		System.out.println(word);
