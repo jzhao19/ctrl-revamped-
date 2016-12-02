@@ -21,7 +21,7 @@ public class Format {
 		}
 	}
 	
-	//make all words lower-case
+	//This method reads the file, makes all words lower-case, and prints out each word on a separate line
 	public void readFile() {
 		while(input.hasNext()) {
 			String nWord = "";
@@ -32,8 +32,10 @@ public class Format {
 					nWord += word.charAt(i);
 				}
 			}
-			if (nWord != "") 
+			if (nWord != "") {
 				System.out.println(nWord.toLowerCase() + " ");
+				//insert hash function here!
+			}
 		}
 	}
 	
