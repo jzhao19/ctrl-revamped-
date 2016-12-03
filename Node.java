@@ -1,17 +1,24 @@
 public class Node {
     private String Str;
     private Node Next;
+    private Node Prev;
     private int Keyval;
     
-    public Node (String str, Node next){
+    public Node (String str, Node next, Node prev){
     Str = str;
     Next = next;
+    Prev = prev;
     
 }
     
     public Node setnext(Node next){
         Next = next;
         return Next;
+    }
+    
+    public Node setprev(Node prev){
+        Prev = prev;
+        return Prev;
     }
     
     public int setval(int keyval){
