@@ -30,6 +30,16 @@ public class Node {
         return Keyval;
     }
     
+    public int compareTo(String name){
+        if (this.Str.compareTo(name) < 1) {
+            return -1;
+        }
+        else if (this.Str.compareTo(name) > 1){
+            return 1;
+        }
+        else return 0;
+    }
+    
     @Override
     public String toString(){
         System.out.println("String:  " + Str + "   Next Node:  " + Next);
