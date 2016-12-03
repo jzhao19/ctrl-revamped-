@@ -9,6 +9,11 @@ public class Node {
     
 }
     
+    public Node setnext(Node next){
+        Next = next;
+        return Next;
+    }
+    
     public int setval(int keyval){
         Keyval = keyval;
         return Keyval;
