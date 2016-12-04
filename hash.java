@@ -21,13 +21,15 @@ public class hash {
             curr.setval(loc);
             return curr;
         }
-        else if (data[loc].compareTo(Name) == 0){
+        else if (data[loc].getString().compareTo(Name) == 0){
             Node prv = data[loc];
             while (prv.getnext() != null){
-                prv = data[loc];
+                prv = data[loc].getnext();
             }
+            //System.out.println(prv.getnext());
             Node curr = new Node(Name,null, prv);
             prv.setnext(curr);
+            //System.out.println(prv);
             curr.setval(loc);
             return curr;
         }
@@ -57,18 +59,20 @@ public class hash {
                 System.out.println(x + ": " + data[x].getString());
             }
             while(data[x] != null && data[x].getnext()!= null){
-            System.out.print(data[x].getnext().getString());
+            System.out.println(data[x].getnext().getString());
+            data[x]=data[x].getnext();
         }
+            //System.out.println(data[x]);
     }
     }
     
     public static void main(String[] args) {
         hash.insert(1,"Jenny");
-        System.out.println(data[1]);
-        System.out.println(data[1].compareTo("Jenny"));
+        hash.insert(1,"Jenny");
         hash.insert(1, "Jenny");
         hash.insert(2, "Jennifer");
         hash.printtable();
     }
 
 }
+
