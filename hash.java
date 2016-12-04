@@ -35,16 +35,16 @@ public class hash {
         }
         
         for (int x = 0; x< data.length; x++){
-        loc = (int) ((x*(7 - (key%7)) + (key % data.length))); 
+        loc = (int) ((x*(7 - (key%7))) + (key % data.length)); 
         if (loc >= data.length){
              int locc = (loc % data.length);
              loc = locc;
+        }
         if (data[loc] == null){
-            Node curr = new Node(Name,null, data[loc]);
+            Node curr = new Node(Name,null, null);
             data[loc] = curr;
             curr.setval(loc);
             return curr;
-        }
         }
         }
        return data[loc]; 
@@ -71,8 +71,11 @@ public class hash {
         hash.insert(1,"Jenny");
         hash.insert(1, "Jenny");
         hash.insert(2, "Jennifer");
+        hash.insert(2 , "Worms");
+        hash.insert(2, "W");
+        hash.insert(10, "Walburga");
+        hash.insert(10, "Ann");
         hash.printtable();
     }
 
 }
-
