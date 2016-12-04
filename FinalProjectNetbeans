@@ -64,9 +64,12 @@ public class FinalProjectNetbeans extends Application {
             public void handle(ActionEvent e) {
                   //find word
                   Format file2 = new Format();
-                  int key = file2.findKey(fileTextField2.getText());
+                  String sWord = fileTextField2.getText();
+                  System.out.println(sWord);
+                  int key = file2.findKey(sWord.toUpperCase());
                   hash h2 = new hash();
-                  h2.insert(key, fileTextField2.getText().toUpperCase());
+                  h2.insert(key, sWord.toUpperCase());
+                  h2.printtable();
             }
         });
         };
@@ -127,11 +130,10 @@ public class FinalProjectNetbeans extends Application {
 			}
 			if (nWord != "") {
                                 int asciiValue = findKey(nWord);
-                                String hashMe = nWord.toUpperCase();
-				System.out.println(hashMe + " " + asciiValue);
+				System.out.println(nWord.toUpperCase() + " " + asciiValue);
 				//insert hash function here
                                 hash hTable = new hash();
-                                hTable.insert(asciiValue, hashMe);
+                                hTable.insert(asciiValue, nWord.toUpperCase());
                                
 			}
 		}
@@ -145,3 +147,4 @@ public class FinalProjectNetbeans extends Application {
 
     
 }
+
