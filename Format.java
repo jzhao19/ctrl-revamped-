@@ -3,7 +3,6 @@ package pkgfinal.project.netbeans;
 
 import java.io.File;
 import java.util.Scanner;
-import pkgfinal.project.netbeans.hash;
 
 //Format class to load, read, and close the file chosen by the user
     public class Format {
@@ -23,16 +22,20 @@ import pkgfinal.project.netbeans.hash;
             return asciiValue;
         }
         
+       
+        
         
         public void read(String fileName) {
             try {
-                input = new Scanner(new File(fileName));
-                System.out.println("Successfully loaded file ");
+                File text = new File(fileName);
+                input = new Scanner(text);
                 readFile(input);
             }
+            
             catch(Exception e) {
-                System.out.println("Could not find file");
+              System.out.println("Could not open file");      
             }
+            
         }
         //make all words lower-case
 	public void readFile(Scanner input) {
@@ -47,7 +50,7 @@ import pkgfinal.project.netbeans.hash;
 			}
 			if (nWord.length() > 0) {
                                 int asciiValue = findKey(nWord.toString());
-				//System.out.println(nWord.toString().toUpperCase() + " " + asciiValue);
+				System.out.println(nWord.toString().toUpperCase() + " " + asciiValue);
 				//insert hash function here
                                 hash hTable = new hash();
                                 hTable.insert(asciiValue, nWord.toString().toUpperCase());
