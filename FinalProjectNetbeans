@@ -10,6 +10,7 @@ package pkgfinal.project.netbeans;
  */
 import java.awt.Desktop;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -34,7 +35,7 @@ public class FinalProjectNetbeans extends Application {
     public void start(Stage startPage) throws Exception {
         startPage.setTitle("Hello there");
         GridPane grid = new GridPane();
-        grid.setAlignment(Pos.TOP_CENTER);
+        grid.setAlignment(Pos.BASELINE_CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
@@ -49,16 +50,14 @@ public class FinalProjectNetbeans extends Application {
         button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                 FileChooser fileChooser = new FileChooser();
+                
                 File file = fileChooser.showOpenDialog(startPage);
+                
                 if (file != null) {
-                    try {
-                        desktop.open(file);
-                        Format file1 = new Format();
-                        file1.read(file.getName());
-                    }
-                    catch (IOException ex) {
-                        System.out.println("Could not open file");
-                    }
+                    //desktop.open(file);
+                    Format file1 = new Format();
+                    //System.out.println(file.getName());
+                    file1.read(file.getAbsolutePath());
                 }
             }   
         
@@ -79,7 +78,7 @@ public class FinalProjectNetbeans extends Application {
                   System.out.println(sWord);
                   int key = file2.findKey(sWord.toUpperCase());
                   hash h2 = new hash();
-                  h2.insert(key, sWord.toUpperCase());
+                  //h2.insert(key, sWord.toUpperCase());
                   h2.printtable();
             }
         });
@@ -89,6 +88,7 @@ public class FinalProjectNetbeans extends Application {
         
         Scene scene = new Scene(grid, 600, 275);
         startPage.setScene(scene);
+        startPage.setAlwaysOnTop(true);
         startPage.show();
     
     
@@ -98,4 +98,4 @@ public class FinalProjectNetbeans extends Application {
         launch(args);
     }
 
-} 
+}
