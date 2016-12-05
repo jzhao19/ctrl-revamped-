@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ctrlf;
+package pkgfinal.project.netbeans;
 
 /**
  *
  * @author Jenny
  */
-public class hash {
-    private static Node data [] = new Node [11];
+public class hash  {
+    private static Node data [] = new Node [199];
     
     public static Node insert(int key, String Name){
         int loc = 0;
@@ -24,7 +24,7 @@ public class hash {
         else if (data[loc].getString().compareTo(Name) == 0){
             Node prv = data[loc];
             while (prv.getnext() != null){
-                prv = data[loc].getnext();
+                prv = prv.getnext();
             }
             //System.out.println(prv.getnext());
             Node curr = new Node(Name,null, prv);
@@ -62,20 +62,10 @@ public class hash {
             System.out.println(data[x].getnext().getString());
             data[x]=data[x].getnext();
         }
-            //System.out.println(data[x]);
     }
     }
     
     public static void main(String[] args) {
-        hash.insert(1,"Jenny");
-        hash.insert(1,"Jenny");
-        hash.insert(1, "Jenny");
-        hash.insert(2, "Jennifer");
-        hash.insert(2 , "Worms");
-        hash.insert(2, "W");
-        hash.insert(10, "Walburga");
-        hash.insert(10, "Ann");
         hash.printtable();
     }
-
 }
