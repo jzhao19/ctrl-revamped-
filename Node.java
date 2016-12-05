@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ctrlf;
 
 /**
@@ -15,12 +9,19 @@ public class Node {
     private Node Next;
     private Node Prev;
     private int Keyval;
+    private int Index;
     
-    public Node (String str, Node next, Node prev){
+    public Node (String str, Node next, Node prev, int index ){
     Str = str;
     Next = next;
     Prev = prev;
+    Index = index;
 }
+    
+    public int getorigind(){
+        return getIndex();
+    }
+    
     public Node setnext(Node next){
         Next = next;
         return Next;
@@ -64,7 +65,22 @@ public class Node {
     
     @Override
     public String toString(){
-        System.out.println("String:  " + Str + "   Next Node:  " + Next);
+        System.out.println("String:  " + Str + "   Next Node:  " + Next + "   Prev Node:  " + Prev);
     return Str;
 }
+
+    /**
+     * @return the Index
+     */
+    public int getIndex() {
+        return Index;
+    }
+
+    /**
+     * @param Index the Index to set
+     */
+    public void setIndex(int Index) {
+        this.Index = Index;
+    }
 }
+
