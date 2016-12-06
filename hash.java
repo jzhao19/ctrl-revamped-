@@ -1,4 +1,3 @@
-
 package ctrlf;
 
 import java.util.ArrayList;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 public class hash {
     private static Node data [] = new Node [11];
     
-    public static Node insert(int key, String Name, int index){
+    public Node insert(int key, String Name, int index){
         int loc = 0;
         loc = (key) % data.length;
         if (data[loc] == null){
@@ -60,20 +59,22 @@ public class hash {
        return data[loc]; 
     }
     
-    public static ArrayList find(String Name, int key){
+    public ArrayList find(String Name, int key){
         ArrayList <NewString> Found = new ArrayList <NewString>();
         int loc = (key) % data.length;
-        //System.out.println("loc:  " + loc);
+        System.out.println("loc:  " + loc);
         Node next = null;
         if (data[loc]==null){
             Found.add(new NewString(null,0));
+            System.out.println(Found.toString());
             return Found;
         }
         if (data[loc].getString().compareTo(Name) == 0){
             System.out.println("in");
             Found.add(new NewString(data[loc].getString(),data[loc].getIndex()));
             if(data[loc].getnext()==null){
-                return Found;
+            System.out.println(Found.toString());
+            return Found;
             }
             next = data[loc].getnext();
         }
@@ -85,9 +86,14 @@ public class hash {
                 int locc = (loc % data.length);
                 loc = locc;
                 }
+                if(data[loc]==null){
+                    Found.add(new NewString(null,0));
+                    return Found;
+                }
                     if (data[loc].getString().compareTo(Name) == 0){
                     Found.add(new NewString(data[loc].getString(), data[loc].getIndex()));
                     if(data[loc].getnext()==null){
+                    System.out.println(Found.toString());
                     return Found;
                     }
                     next = data[loc].getnext();
@@ -101,6 +107,7 @@ public class hash {
         
         if (next == null){
             Found.add(new NewString(null,0));
+            System.out.println(Found.toString());
             return Found;
         }
 
@@ -113,7 +120,7 @@ public class hash {
         return Found;
     }
     
-    public static void printtable(){
+    public void printtable(){
         for (int x = 0; x< data.length;x++){
             if (data[x] ==null){
                 System.out.println(x + ": " + data[x]);
