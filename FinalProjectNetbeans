@@ -52,15 +52,28 @@ private Desktop desktop = Desktop.getDesktop();
         grid.add(button, 0, 1);
           button.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
+                boolean load = false;
                 FileChooser fileChooser = new FileChooser();
                 
                 File file = fileChooser.showOpenDialog(startPage);
                 
                 if (file != null) {
-                    //desktop.open(file);
                     Format file1 = new Format();
-                    //System.out.println(file.getName());
-                    file1.read(file.getAbsolutePath());
+                    load = file1.read(file.getAbsolutePath());
+                }
+                if (load == true) {
+                    Font font = Font.font("Serif", FontPosture.ITALIC, Font.getDefault().getSize());
+                    Text success = new Text("File successfully loaded!");
+                    success.setFont(font);
+                    success.setFill(Color.GREEN);
+                    grid.add(success, 0, 2);
+                } 
+                else {
+                    Font font = Font.font("Serif", FontPosture.ITALIC, Font.getDefault().getSize());
+                    Text success = new Text("Couldn't load file");
+                    success.setFont(font);
+                    success.setFill(Color.RED);
+                    grid.add(success, 0, 2);
                 }
             }   
         
