@@ -9,6 +9,13 @@ import java.util.ArrayList;
 public class hash {
     private static Node data [] = new Node [11];
     
+    public boolean isfull(int x){
+        if (x==data.length-1){
+            return true;
+        }
+        return false;
+    }
+    
     public Node insert(int key, String Name, int index){
         int loc = 0;
         loc = (key) % data.length;
