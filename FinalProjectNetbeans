@@ -25,8 +25,15 @@ import javafx.scene.control.TextField;
 
 //For Format class
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.paint.Color;
+import javafx.scene.text.FontPosture;
 import javafx.stage.FileChooser;
 
 
@@ -34,8 +41,9 @@ public class FinalProjectNetbeans extends Application {
     
 
 private Desktop desktop = Desktop.getDesktop();
+private Scanner input;
     @Override
-    public void start(Stage startPage) throws Exception {
+    public void start(Stage startPage) throws Exception { // popup window
         startPage.setTitle("Hello there");
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.TOP_CENTER);
@@ -48,18 +56,40 @@ private Desktop desktop = Desktop.getDesktop();
         pageTitle.setFont(Font.font("Lora", FontWeight.NORMAL, 20));
         grid.add(pageTitle, 0, 0, 2, 1);
         
-        Button button = new Button("Open a file");
+        Button button = new Button("Open a file"); //makes the button
         grid.add(button, 0, 1);
-          button.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
+        button.setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent e) { //opens file directory on computer
                 boolean load = false;
                 FileChooser fileChooser = new FileChooser();
                 
                 File file = fileChooser.showOpenDialog(startPage);
+                TextArea text = new TextArea();
                 
                 if (file != null) {
                     Format file1 = new Format();
                     load = file1.read(file.getAbsolutePath());
+             try{
+                         input = new Scanner(new File(file.getAbsolutePath()));
+ 
+                         while(input.hasNext()) {
+                             StringBuilder nWord = new StringBuilder();   
+                             String word = input.next();
+                             text.appendText(word + " ");
+                         }  
+                         text.setMaxSize(400, 600);
+                         text.setWrapText(true);
+                         grid.add(text, 0, 4);
+                 }   
+                    
+                   catch (FileNotFoundException ex) {
+                        Logger.getLogger(FinalProjectNetbeans.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+
+                    if (file1.islarge()==true){
+                        popup();
+                    }
+                         
                 }
                 if (load == true) {
                     Font font = Font.font("Serif", FontPosture.ITALIC, Font.getDefault().getSize());
@@ -80,10 +110,12 @@ private Desktop desktop = Desktop.getDesktop();
         });
         //New textbox appears asking for specific word to find
             Label searchFor = new Label("What word are you looking for?");
-            grid.add(searchFor, 0, 3);
+            grid.add(searchFor, 0, 6);
             TextField fileTextField2 = new TextField();
-            grid.add(fileTextField2, 1, 3);
-            fileTextField2.setOnAction(new EventHandler<ActionEvent>() {
+            grid.add(fileTextField2, 0, 7);
+            Button button2 = new Button("Enter");
+            grid.add(button2, 1, 7);
+             button2.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                   /**HASH user-inputted word, check if index hashed to is null;
                    * if not, return how many words are in that index
@@ -93,20 +125,37 @@ private Desktop desktop = Desktop.getDesktop();
                   String sWord = fileTextField2.getText();
                   int asciiv = file2.getAscii(sWord.toUpperCase());
                   hash h2 = new hash();
-                  h2.find(sWord.toUpperCase(), asciiv);
-                  h2.printtable();
+                  String found = h2.find(sWord.toUpperCase(), asciiv).toString(); //finds the words in hashtable
+                  h2.printtable();//prints the hashtable
+                  Label index = new Label(sWord +  " is located at index('s): " + found);
+                  index.setFont(new Font(15));
+                  grid.add(index, 0, 10);
             }
         });
       
-            
-        Scene scene = new Scene(grid, 600, 275);
+        Scene scene = new Scene(grid, 650, 475);
         startPage.setScene(scene);
         startPage.setAlwaysOnTop(true);
         startPage.show();
-    
-    
     }
 
+    public static void popup(){
+        Stage newStage = new Stage();
+        GridPane grid = new GridPane();
+        grid.setAlignment(Pos.TOP_CENTER);
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(25, 25, 25, 25));
+        Label error = new Label("File too large! ");
+        error.setFont(new Font (20.0));
+        grid.add(error, 0, 0);
+        Scene stageScene = new Scene(grid, 300, 100);
+        newStage.setScene(stageScene);
+        newStage.setAlwaysOnTop(true);
+        newStage.show();
+
+    }
+    
     public static void main(String[] args) {
         launch(args);
     }
@@ -115,4 +164,3 @@ private Desktop desktop = Desktop.getDesktop();
     
     
 }
-
