@@ -2,40 +2,50 @@
  * then asks for a word to search for. A hash function  is still needed to
  * finish the code. 
 */
-package pkgfinal.project.netbeans;
+package ctrlf;
 
 /**
  *
  * @author jenniferwourms
  */
 import java.awt.Desktop;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
+//For Format class
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.paint.Color;
+import javafx.scene.text.FontPosture;
 import javafx.stage.FileChooser;
+
 
 public class FinalProjectNetbeans extends Application {
 
-    private Desktop desktop = Desktop.getDesktop();
+    private Scanner input;
+private Desktop desktop = Desktop.getDesktop();
     @Override
     public void start(Stage startPage) throws Exception {
         startPage.setTitle("Hello there");
         GridPane grid = new GridPane();
-        grid.setAlignment(Pos.BASELINE_CENTER);
+        grid.setAlignment(Pos.TOP_CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
@@ -47,46 +57,72 @@ public class FinalProjectNetbeans extends Application {
         
         Button button = new Button("Open a file");
         grid.add(button, 0, 1);
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent e) {
+          button.setOnAction(new EventHandler<ActionEvent>() {
+                public void handle(ActionEvent e) {
+                boolean load = false;
                 FileChooser fileChooser = new FileChooser();
-                
                 File file = fileChooser.showOpenDialog(startPage);
-                
+                TextArea text = new TextArea();
                 if (file != null) {
-                    //desktop.open(file);
                     Format file1 = new Format();
-                    //System.out.println(file.getName());
-                    file1.read(file.getAbsolutePath());
+                    load = file1.read(file.getAbsolutePath());
+                    //reads file to a textbox that appears below the search button
+                    try {
+                        input = new Scanner(new File(file.getAbsolutePath()));
+                        while(input.hasNext()) {
+                            StringBuilder nWord = new StringBuilder();   
+                            String word = input.next();
+                            text.appendText(word + " ");
+                        }
+                        text.setMaxSize(400, 600);
+                        text.setWrapText(true);
+                        grid.add(text, 0, 4);
+                    }   
+                    catch (FileNotFoundException ex) {
+                        Logger.getLogger(FinalProjectNetbeans.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                if (load == true) {
+                    Font font = Font.font("Serif", FontPosture.ITALIC, Font.getDefault().getSize());
+                    Text success = new Text("File successfully loaded!");
+                    success.setFont(font);
+                    success.setFill(Color.GREEN);
+                    grid.add(success, 0, 2);
+                } 
+                else {
+                    Font font = Font.font("Serif", FontPosture.ITALIC, Font.getDefault().getSize());
+                    Text success = new Text("Couldn't load file");
+                    success.setFont(font);
+                    success.setFill(Color.RED);
+                    grid.add(success, 0, 2);
                 }
-            }   
+                }   
         
-        });
-      
-            //New textbox appears asking for specific word to find
+                }});
+                
+        //New textbox appears asking for specific word to find
             Label searchFor = new Label("What word are you looking for?");
-            grid.add(searchFor, 0, 3);
+            grid.add(searchFor, 0, 6);
             TextField fileTextField2 = new TextField();
-            grid.add(fileTextField2, 1, 3);
-            fileTextField2.setOnAction(new EventHandler<ActionEvent>() {
+            grid.add(fileTextField2, 0, 7);
+            Button button2 = new Button("Enter");
+            grid.add(button2, 1, 7);
+            button2.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent e) {
                   /**HASH user-inputted word, check if index hashed to is null;
                    * if not, return how many words are in that index
                    */
+                  ArrayList <String> Found = new ArrayList <String>();
                   Format file2 = new Format();
                   String sWord = fileTextField2.getText();
-                  System.out.println(sWord);
-                  int key = file2.findKey(sWord.toUpperCase());
+                  int asciiv = file2.getAscii(sWord.toUpperCase());
                   hash h2 = new hash();
-                  //h2.insert(key, sWord.toUpperCase());
+                  h2.find(sWord.toUpperCase(), asciiv);
                   h2.printtable();
             }
         });
-        
-        
-        
-        
-        Scene scene = new Scene(grid, 600, 275);
+      
+            
+        Scene scene = new Scene(grid, 650, 475);
         startPage.setScene(scene);
         startPage.setAlwaysOnTop(true);
         startPage.show();
@@ -98,4 +134,7 @@ public class FinalProjectNetbeans extends Application {
         launch(args);
     }
 
+    
+    
+    
 }
